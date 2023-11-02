@@ -40,6 +40,7 @@ const RecordLive = () => {
         log("Starting the session");
         console.log("pc");
         console.log(pc);
+        //TODO: Make sure answer from golang server is available before setting remote description
         // pc.setRemoteDescription(
         //   new RTCSessionDescription({
         //     type: "offer",
@@ -65,6 +66,8 @@ const RecordLive = () => {
       ],
     });
 
+    console.log("peerConnection", peerConnection);
+
     peerConnection.oniceconnectionstatechange = (e) =>
       log(peerConnection.iceConnectionState);
     peerConnection.onicecandidate = (event) => {
@@ -89,6 +92,8 @@ const RecordLive = () => {
 
       const offer = await peerConnection.createOffer();
       await peerConnection.setLocalDescription(offer);
+      console.log("offer", offer);
+      // TODO: send offer to the golang server
 
       setPC(() => peerConnection); // Set the peer connection in the component state.
     } catch (err) {
@@ -127,7 +132,7 @@ const RecordLive = () => {
           width="160"
           height="120"
           autoPlay
-          muted
+          // muted
           srcObject={videoStream}
         ></video>
       </div>
