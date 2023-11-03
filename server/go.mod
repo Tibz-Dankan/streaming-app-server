@@ -11,6 +11,8 @@ require (
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/google/uuid v1.3.1 // indirect
+	github.com/gorilla/mux v1.8.0 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/nareix/joy5 v0.0.0-20210317075623-2c912ca30590 // indirect
 	github.com/pion/datachannel v1.5.5 // indirect
@@ -28,6 +30,7 @@ require (
 	github.com/pion/transport/v3 v3.0.1 // indirect
 	github.com/pion/turn/v3 v3.0.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/rs/cors v1.10.1 // indirect
 	github.com/spf13/cobra v0.0.4-0.20190109003409-7547e83b2d85 // indirect
 	github.com/spf13/pflag v1.0.4-0.20181223182923-24fa6976df40 // indirect
 	github.com/stretchr/testify v1.8.4 // indirect

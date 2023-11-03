@@ -135,44 +135,25 @@ const RecordLive = () => {
   return (
     <div>
       <h1>RecordLive</h1>
+
       <div>
-        <textarea
-          id="localSessionDescription"
-          readOnly
-          value={localSessionDescription}
-          style={{ width: "500px", minHeight: "75px" }}
-        ></textarea>
-        <button onClick={copySDP}>Copy browser SDP to clipboard</button>
-      </div>
-      <div>
-        <textarea
-          id="remoteSessionDescription"
-          value={remoteSessionDescription}
-          onChange={(e) => setRemoteSessionDescription(() => e.target.value)}
-          style={{ width: "500px", minHeight: "75px" }}
-        ></textarea>
-        <button onClick={startSession}>Start Session</button>
-      </div>
-      <div>
-        {/* <video
-          id="video1"
+        <video
+          playsInline
+          autoPlay
+          muted
+          controls={true}
+          ref={userVideo}
           width="160"
           height="120"
+        />
+        <video
+          playsInline
           autoPlay
-          // muted
-          srcObject={videoStream}
-        ></video> */}
-
-        <video playsInline autoPlay muted controls={true} ref={userVideo} />
-        <video playsInline autoPlay controls={true} ref={partnerVideo} />
-      </div>
-      <div>
-        <h2>Logs</h2>
-        <div id="logs">
-          {logs.map((log, index) => (
-            <p key={index}>{log}</p>
-          ))}
-        </div>
+          controls={true}
+          ref={partnerVideo}
+          width="160"
+          height="120"
+        />
       </div>
     </div>
   );

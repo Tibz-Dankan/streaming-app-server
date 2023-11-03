@@ -20,6 +20,8 @@ import (
 	"github.com/pion/webrtc/v4/pkg/media/ivfwriter"
 	"github.com/pion/webrtc/v4/pkg/media/oggwriter"
 	"github.com/streaming-server/internal/signal"
+
+	"github.com/streaming-server/httpserver"
 )
 
 func saveToDisk(i media.Writer, track *webrtc.TrackRemote) {
@@ -47,6 +49,8 @@ func saveToDisk(i media.Writer, track *webrtc.TrackRemote) {
 
 // nolint:gocognit
 func main() {
+
+	httpserver.Start()
 	// Everything below is the Pion WebRTC API! Thanks for using it ❤️.
 
 	// Create a MediaEngine object to configure the supported codec
