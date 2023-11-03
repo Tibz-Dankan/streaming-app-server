@@ -104,6 +104,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Peer connection created!")
 
 	// Allow us to receive 1 audio track, and 1 video track
 	if _, err = peerConnection.AddTransceiverFromKind(webrtc.RTPCodecTypeAudio); err != nil {
@@ -111,6 +112,7 @@ func main() {
 	} else if _, err = peerConnection.AddTransceiverFromKind(webrtc.RTPCodecTypeVideo); err != nil {
 		panic(err)
 	}
+	fmt.Println("Received audio and video tracks !")
 
 	oggFile, err := oggwriter.New("output.ogg", 48000, 2)
 	if err != nil {
@@ -120,6 +122,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("About to Write audio and video files to disk!")
 
 	// Set a handler for when a new remote track starts, this handler saves buffers to disk as
 	// an ivf file, since we could have multiple video tracks we provide a counter.
@@ -134,6 +137,7 @@ func main() {
 			saveToDisk(ivfFile, track)
 		}
 	})
+	fmt.Println("Finished writing audio and video files to disk !")
 
 	// Set the handler for ICE connection state
 	// This will notify you when the peer has connected/disconnected
@@ -162,21 +166,26 @@ func main() {
 		}
 	})
 
+	fmt.Println("Waiting for the offer from the client")
+
 	// Wait for the offer to be pasted
 	offer := webrtc.SessionDescription{}
 	signal.Decode(signal.MustReadStdin(), &offer)
+	fmt.Println("waiting for remote session description !")
 
 	// Set the remote SessionDescription
 	err = peerConnection.SetRemoteDescription(offer)
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Finished setting remote session description' !")
 
 	// Create answer
 	answer, err := peerConnection.CreateAnswer(nil)
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Finished creating the answer' !")
 
 	// Create channel that is blocked until ICE Gathering is complete
 	gatherComplete := webrtc.GatheringCompletePromise(peerConnection)
@@ -186,6 +195,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Finished setting local description' !")
 
 	// Block until ICE Gathering is complete, disabling trickle ICE
 	// we do this because we only can exchange one signaling message
@@ -195,7 +205,7 @@ func main() {
 	// Output the answer in base64 so we can paste it in browser
 	fmt.Println(signal.Encode(*peerConnection.LocalDescription()))
 
+	fmt.Println("Started the backend")
 	// Block forever
 	select {}
-
 }
