@@ -68,13 +68,21 @@ const RecordLive = () => {
     await peerRef.current.setRemoteDescription(
       new RTCSessionDescription(offer)
     );
+    console.log(
+      "remote description protocol",
+      await peerRef.current.setRemoteDescription(
+        new RTCSessionDescription(offer)
+      )
+    );
 
     await userStream.current.getTracks().forEach((track) => {
       peerRef.current.addTrack(track, userStream.current);
     });
 
     const answer = await peerRef.current.createAnswer();
-    await peerRef.current.setLocalDescription(answer);
+    const localSDP = await peerRef.current.setLocalDescription(answer);
+    console.log("local sdp", localSDP);
+    console.log("local description protocol", answer);
 
     await webSocketRef.current.send(
       JSON.stringify({ answer: peerRef.current.localDescription })
