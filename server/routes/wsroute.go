@@ -7,5 +7,5 @@ import (
 )
 
 func WSRoute(router *mux.Router) {
-	router.HandleFunc("/ws", handlers.WSHandler)
+	router.HandleFunc("/ws/webtrc", handlers.WSWebRTCHandler)
 }
