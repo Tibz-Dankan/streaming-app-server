@@ -4,7 +4,7 @@ WORKDIR /app/server
 
 COPY . .
 
-RUN go build -o ./bin/myapp ./
+RUN go build -o ./bin/myapp ./cmd
 
 EXPOSE 8080
 
