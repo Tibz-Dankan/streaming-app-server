@@ -1,1 +1,1 @@
-Live Stream app written in GO and React
+# Live streaming server in golang
