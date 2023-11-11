@@ -79,18 +79,19 @@ func WSWebRTCHandler(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 			return
 		}
-		fmt.Println("Received message from client:", message)
+		fmt.Println("Received message from client: \n", message)
+		fmt.Println("Received message from client (raw JSON): \n", string(message))
 
 		var receivedMessage Message
 		if err := json.Unmarshal(message, &receivedMessage); err != nil {
-			log.Println("Failed to unmarshal JSON of message:", err)
+			log.Println("Failed to unmarshal JSON of message: \n", err)
 			continue
 		}
 		fmt.Println("receivedMessage ", receivedMessage)
 
 		// Check for the "offer" property
 		if receivedMessage.Type == "offer" {
-			fmt.Println("Received client offer:", receivedMessage.Offer)
+			fmt.Println("Received client offer: \n", receivedMessage.Offer)
 			// receive offer send answer
 			answer := ReceiveOfferCreateAnswer(receivedMessage.Offer)
 			message := Message{Type: "answer", Answer: answer}
@@ -108,7 +109,7 @@ func WSWebRTCHandler(w http.ResponseWriter, r *http.Request) {
 
 		// Check for the "iceCandidate" property
 		if receivedMessage.Type == "iceCandidate" {
-			fmt.Println("Received client iceCandidate:", receivedMessage.IceCandidate)
+			fmt.Println("Received client iceCandidate: \n", receivedMessage.IceCandidate)
 			// receive client iceCandidate send send server iceCandidate
 
 			iceCandidate := ReceiveCreateIceCandidate(receivedMessage.IceCandidate)
