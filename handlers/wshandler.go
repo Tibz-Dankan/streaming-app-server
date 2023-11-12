@@ -65,13 +65,13 @@ func WSWebRTCHandler(w http.ResponseWriter, r *http.Request) {
 		IceCandidate webrtc.ICECandidate       `json:"iceCandidate"`
 	}
 
-	// type ServerAnswer struct {
-	// 	Answer webrtc.SessionDescription `json:"answer"`
-	// }
+	type ServerAnswer struct {
+		Answer webrtc.SessionDescription `json:"answer"`
+	}
 
-	// type ServerIceCandidate struct {
-	// 	IceCandidate webrtc.ICECandidate `json:"iceCandidate"`
-	// }
+	type ServerIceCandidate struct {
+		IceCandidate webrtc.ICECandidate `json:"iceCandidate"`
+	}
 
 	for {
 		messageType, message, err := conn.ReadMessage()
