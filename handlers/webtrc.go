@@ -194,12 +194,13 @@ func ReceiveOfferCreateAnswer(offer webrtc.SessionDescription) webrtc.SessionDes
 
 	fmt.Println("waiting for remote session description !")
 
-	// Set the remote SessionDescription
-	err := peerConnection.SetRemoteDescription(offer)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("Finished setting remote session description' !")
+	// // TODO: to fix the error around setRemote description
+	// // Set the remote SessionDescription
+	// err := peerConnection.SetRemoteDescription(offer)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// fmt.Println("Finished setting remote session description' !")
 
 	// Create answer
 	answer, err := peerConnection.CreateAnswer(nil)
