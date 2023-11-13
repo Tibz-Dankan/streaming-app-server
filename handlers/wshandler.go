@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/websocket"
+	"github.com/pion/sdp/v3"
 	"github.com/pion/webrtc/v4"
 )
 
@@ -48,9 +49,12 @@ func WSWebRTCHandler(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	type ClientOffer struct {
-		// Offer models.Offer `json:"offer"`
-		Type string                    `json:"type"`
-		Sdp  webrtc.SessionDescription `json:"sdp"`
+		// Type string `json:"type"`
+		Type webrtc.SDPType `json:"type"`
+		Sdp  string         `json:"sdp"`
+
+		// This will never be initialized by callers, internal use only
+		parsed *sdp.SessionDescription
 	}
 	// type ServerAnswer struct {
 	// 	Answer models.Answer `json:"answer"`
@@ -95,7 +99,9 @@ func WSWebRTCHandler(w http.ResponseWriter, r *http.Request) {
 		if receivedMessage.Type == "offer" {
 			fmt.Println("Received client offer: \n", receivedMessage.Offer)
 			// receive offer send answer
-			var clientOffer ClientOffer
+			// var clientOffer ClientOffer
+			var clientOffer webrtc.SessionDescription
+
 			if err := json.Unmarshal(message, &clientOffer); err != nil {
 				log.Println("Failed to unmarshal JSON of client offer: \n", err)
 				continue
@@ -103,7 +109,7 @@ func WSWebRTCHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("ClientOffer ", clientOffer)
 
 			// answer := ReceiveOfferCreateAnswer(receivedMessage.Offer)
-			answer := ReceiveOfferCreateAnswer(clientOffer.Sdp)
+			answer := ReceiveOfferCreateAnswer(clientOffer)
 			message := Message{Type: "answer", Answer: answer}
 
 			jsonMessage, err := json.Marshal(message)
