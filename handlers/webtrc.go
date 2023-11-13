@@ -208,12 +208,27 @@ func ReceiveOfferCreateAnswer(offer webrtc.SessionDescription) webrtc.SessionDes
 	}
 	fmt.Println("Finished creating the answer' !")
 
+	// // Sets the LocalDescription, and starts our UDP listeners
+	// err = peerConnection.SetLocalDescription(answer)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// fmt.Println("Finished setting local description' !")
+
+	// Create channel that is blocked until ICE Gathering is complete
+	gatherComplete := webrtc.GatheringCompletePromise(peerConnection)
+
 	// Sets the LocalDescription, and starts our UDP listeners
 	err = peerConnection.SetLocalDescription(answer)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("Finished setting local description' !")
+
+	// Block until ICE Gathering is complete, disabling trickle ICE
+	// we do this because we only can exchange one signaling message
+	// in a production application you should exchange ICE Candidates via OnICECandidate
+	<-gatherComplete
 
 	return answer
 }

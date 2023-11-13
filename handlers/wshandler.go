@@ -97,9 +97,6 @@ func WSWebRTCHandler(w http.ResponseWriter, r *http.Request) {
 
 		// Check for the "offer" property
 		if receivedMessage.Type == "offer" {
-			fmt.Println("Received client offer: \n", receivedMessage.Offer)
-			// receive offer send answer
-			// var clientOffer ClientOffer
 			var clientOffer webrtc.SessionDescription
 
 			if err := json.Unmarshal(message, &clientOffer); err != nil {
