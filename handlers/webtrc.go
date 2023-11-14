@@ -209,12 +209,12 @@ func ReceiveOfferCreateAnswer(offer webrtc.SessionDescription) webrtc.SessionDes
 	}
 	fmt.Println("Finished creating the answer' !")
 
-	// // Sets the LocalDescription, and starts our UDP listeners
-	// err = peerConnection.SetLocalDescription(answer)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// fmt.Println("Finished setting local description' !")
+	// Sets the LocalDescription, and starts our UDP listeners
+	err = peerConnection.SetLocalDescription(answer)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Finished setting local description' !")
 
 	// Create channel that is blocked until ICE Gathering is complete
 	gatherComplete := webrtc.GatheringCompletePromise(peerConnection)
